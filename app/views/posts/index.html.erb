@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
 
@@ -11,12 +10,14 @@
 
   <tbody>
     <% @posts.each do |post| %>
-    <% complete = post.text.length >10 ? "..." : "" %>
-    <%= post.text.slice(0..9) << complete%>
       <tr>
+        <td><% complete = post.text.length >10 ? "..." : "" %>
+        <%= post.text.slice(0..9) << complete%></td>
         <td><%= link_to 'Show', post %></td>
+        <% if is_author?(post)%>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

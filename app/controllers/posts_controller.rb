@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_member!, except: [:show, :index]
-  before_action :authorize_author, except: [:show, :index]
+  before_action :authorize_author, only: [:edit, :update, :destroy]
+
+  helper_method :is_author?
   # GET /posts or /posts.json
   def index
     @posts = Post.all
@@ -10,6 +12,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @post = Post.find(params[:id])
+    @is_author = is_author?
   end
 
   # GET /posts/new
@@ -68,9 +71,9 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:text)
     end
-
-    def is_author?
-      current_member.id == @post.member_id
+    
+    def is_author? (post = @post)
+      member_signed_in? && current_member.id == post.member_id
     end
 
     def authorize_author
