@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_member!, except: [:show, :index]
+  before_action :authorize_author, except: [:show, :index]
   # GET /posts or /posts.json
   def index
     @posts = Post.all
@@ -67,4 +68,17 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:text)
     end
+
+    def is_author?
+      current_member.id == @post.member_id
+    end
+
+    def authorize_author
+      unless is_author?
+        flash[:notice] = "You can only edit/ delete your own posts"
+        redirect_to @post
+      end
+    end
+
+    
 end
