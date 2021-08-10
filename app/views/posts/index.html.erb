@@ -11,6 +11,8 @@
 
   <tbody>
     <% @posts.each do |post| %>
+    <% complete = post.text.length >10 ? "..." : "" %>
+    <%= post.text.slice(0..9) << complete%>
       <tr>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>

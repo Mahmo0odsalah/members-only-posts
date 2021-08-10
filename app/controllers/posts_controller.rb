@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @post = Post.find(params[:id])
   end
 
   # GET /posts/new
@@ -64,6 +65,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.fetch(:post, {})
+      params.require(:post).permit(:text)
     end
 end
