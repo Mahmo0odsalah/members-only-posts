@@ -1,0 +1,5 @@
+<% if member_signed_in? %>
+      <%= link_to 'Sign out', destroy_member_session_path, method: :delete, data: { confirm: "Sign out?" }%>
+    <% else %>
+      <%= link_to 'Sign in', member_session_path%>
+    <% end %>
