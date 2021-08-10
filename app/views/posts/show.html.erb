@@ -1,4 +1,4 @@
-<%= render "author", post:@post%>
+<h2><%= render "author", post:@post%></h2>
 <%= @post.text%>
 <% if is_author?%>
     <%= link_to 'Edit', edit_post_path(@post) %> |

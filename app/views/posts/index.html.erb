@@ -11,7 +11,8 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
-        <td><% complete = post.text.length >10 ? "..." : "" %>
+        <td><%= render "author", post:post%>  |  
+        <% complete = post.text.length >10 ? "..." : "" %>
         <%= post.text.slice(0..9) << complete%></td>
         <td><%= link_to 'Show', post %></td>
         <% if is_author?(post)%>
